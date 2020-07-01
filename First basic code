@@ -1,0 +1,63 @@
+class Root:
+
+    def __init__(self, num, name, url, des):
+        self.num = num
+        self.name = name
+        self.url = url
+        self.des = des
+
+    def new(self, num, name, url, des):
+        ob = Root(num, name, url, des)
+        ls.append(ob)
+
+    def view(self, ob):
+        print("Root number   : ", ob.num)
+        print("Root name : ", ob.name)
+        print("URL : ", ob.url)
+        print("Description : ", ob.des)
+        print("\n")
+
+
+ls = []
+obj = Root(0, '', '', '')
+
+
+def main_menu():
+    print("\n\n\t ---------------")
+    print("\t| ### Roots ### |")
+    print("\t ---------------")
+    print("\n 1) Add new root package. \n 2) View your root packages \n 3) Exit")
+
+    ch = int(input("\n\nEnter your choice: "))
+
+    if ch == 1:
+        root_num = ls.__len__() + 1
+        print("\n\n")
+        root_name = str(input("Enter the root name: "))
+        root_url = str(input("Enter the url: "))
+        root_des = str(input("Enter the root description: "))
+
+        obj.new(root_num, root_name, root_url, root_des)
+
+        main_menu()
+
+    elif ch == 2:
+        print("\n")
+        print("\nYour Collections:\n")
+        if ls.__len__() == 0:
+            print("No Roots")
+        else:
+            for i in range(ls.__len__()):
+                obj.view(ls[i])
+
+        main_menu()
+
+    elif ch == 3:
+        pass
+
+    else:
+        print("Invalid input!")
+        main_menu()
+
+
+main_menu()

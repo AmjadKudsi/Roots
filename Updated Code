@@ -1,135 +1,168 @@
-class Root: 
-     
-    def __init__(self, rnum, rname): 
-        self.rnum = rnum 
-        self.rname = rname  
+class Root:
+
+    def __init__(self, rnum, rname):
+        self.rnum = rnum
+        self.rname = rname
         self.bl = []
-        
-    def newr(self, rnum, rname):  
-        r_ob = Root(rnum, rname) 
-        rl.append(r_ob) 
-      
-    def viewr(self, r_ob): 
-        print(" Root number: ", r_ob.rnum) 
-        print(" Root name: ", r_ob.rname) 
-        print("\n")     
-    
-    class Bookmark():
-        
+
+    def newr(self, rnum, rname):
+        r_ob = Root(rnum, rname)
+        rl.append(r_ob)
+
+    def viewr(self, r_ob):
+        print(" Root number: ", r_ob.rnum)
+        print(" Root name: ", r_ob.rname)
+        print("\n")
+
+    class Bookmark:
+
         def __init__(self, bnum, burl, bdes):
             self.bnum = bnum
             self.burl = burl
             self.bdes = bdes
-        
+
         def newb(self, bnum, r_num, burl, bdes):
             b_ob = rl[r_num].Bookmark(bnum, burl, bdes)
             rl[r_num].bl.append(b_ob)
-        
+
         def viewb(self, b_ob):
             print(" Bookmark number: ", b_ob.bnum)
             print(" Bookmark url: ", b_ob.burl)
             print(" Bookmark description: ", b_ob.bdes)
             print("\n")
-    
 
-# Root list 
-rl = [] 
+
+# Root list and object
+rl = []
 r_obj = Root(0, '')
+
+# Bookmark object
+b_obj = r_obj.Bookmark(0, '', '')
+
 
 def main_menu():
     print("\n\n\t ---------------")
-    print("\t| ### Roots ### |") 
+    print("\t| ### Roots ### |")
     print("\t ---------------")
-    print("\n 1) Add new bookmark. \n 2) View your root packages \n 3) Exit") 
-  
-    ch = int(input("\n\nEnter your choice: ")) 
+    print("\n 1) Add new bookmark. \n 2) View your root packages \n 3) Exit")
 
-    if(ch == 1):
-        
+    ch = int(input("\n\nEnter your choice: "))
+
+    if ch == 1:
+
         print("\n\n Add to: \n\n 1) An existing root \n 2) Create a new root")
-        
+
         ch1 = int(input("\n\n Enter your choice: "))
-        
-        if(ch1 == 1):
-            
+
+        if ch1 == 1:
+
             root = str(input("\n\n Enter the root name: "))
-            
+
             found = 0
-            
+            i = 0
+
             for i in range(rl.__len__()):
                 if rl[i].rname == root:
-                    found=1
+                    found = 1
                     break
-                    
+
             if found == 0:
                 print("Root not found")
-                
+
             elif found == 1:
                 r_obj.viewr(rl[i])
-                
+                for j in range(rl[i].bl.__len__()):
+                    b_obj.viewb(rl[i].bl[j])
+
+                ri = rl[i].rnum - 1
+
+                b_num = rl[i].bl.__len__() + 1
+
+                url = str(input("\n\n Enter the bookmark url: "))
+
+                des = str(input("\n Enter the bookmark description: "))
+
+                b_obj.newb(b_num, ri, url, des)
+
+                print("\n Bookmark added!")
+
             main_menu()
-                    
-        
-        elif(ch1 == 2):
-        
+
+
+        elif ch1 == 2:
+
             ri = rl.__len__()
-            root_num =  ri + 1
+            root_num = ri + 1
             print("\n\n")
             root_name = str(input("Enter the root name: "))
-        
+
             r_obj.newr(root_num, root_name)
-            
+
             print("\n New root created!")
-            
+
             b_num = rl[ri].bl.__len__() + 1
-            
+
             url = str(input("\n\n Enter the bookmark url: "))
-            
+
             des = str(input("\n Enter the bookmark description: "))
-            
-            newb(b_num, ri, url, des)
-            
+
+            b_obj.newb(b_num, ri, url, des)
+
             print("\n Bookmark added!")
-            
-        
+
             main_menu()
-            
-        else: 
-            print("Invalid input!") 
+
+        else:
+            print("Invalid input!")
             main_menu()
-        
-        
-    elif(ch == 2): 
-        print("\n") 
+
+
+    elif ch == 2:
+        print("\n")
         print("\nYour Collections:\n")
         if rl.__len__() == 0:
             print("No Roots")
-        else:    
-            for i in range(rl.__len__()):     
-                r_obj.viewr(rl[i])
-                
-                for i in range(rl[i].bl.__len__()):
-                    b_obj.viewb(rl[i].bl[i])
-            
-        ch2 = str(input("Search root (Enter 'exit' to exit): "))
-        print("\n\n")
-        
-        if(ch2 == 'exit'): pass
-    
         else:
             for i in range(rl.__len__()):
-                if rl[i].rname == ch2:
+                r_obj.viewr(rl[i])
+
+                for j in range(rl[i].bl.__len__()):
+                    b_obj.viewb(rl[i].bl[j])
+
+        while True:
+            ch2 = str(input("Search root (Enter 'exit' to exit search): "))
+            print("\n\n")
+
+            if ch2 == 'exit':
+                break
+
+            else:
+                found = 0
+                i = 0
+
+                for i in range(rl.__len__()):
+                    if rl[i].rname == ch2:
+                        found = 1
+                        break
+
+                if found == 0:
+                    print("Root not found")
+
+                elif found == 1:
                     r_obj.viewr(rl[i])
-                
-                
+
+                    for j in range(rl[i].bl.__len__()):
+                        b_obj.viewb(rl[i].bl[j])
+
         main_menu()
-        
-        
-    elif(ch == 3): 
+
+
+    elif ch == 3:
         pass
-              
-    else: 
-        print("Invalid input!") 
+
+    else:
+        print("Invalid input!")
         main_menu()
-        
+
+
 main_menu()

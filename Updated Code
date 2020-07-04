@@ -3,7 +3,8 @@ class Root:
     def __init__(self, rnum, rname): 
         self.rnum = rnum 
         self.rname = rname  
-            
+        self.bl = []
+        
     def newr(self, rnum, rname):  
         r_ob = Root(rnum, rname) 
         rl.append(r_ob) 
@@ -12,20 +13,17 @@ class Root:
         print(" Root number: ", r_ob.rnum) 
         print(" Root name: ", r_ob.rname) 
         print("\n")     
-
-    # Bookmarks list 
-    bl = []
     
     class Bookmark():
         
         def __init__(self, bnum, burl, bdes):
             self.bnum = bnum
-            self.url = burl
-            self.des = bdes
+            self.burl = burl
+            self.bdes = bdes
         
-        def newb(self, bnum, burl, bdes):
-            b_ob = r_obj.Bookmark(bnum, burl, bdes)
-            r_obj.bl.append(b_ob)
+        def newb(self, bnum, r_num, burl, bdes):
+            b_ob = rl[r_num].Bookmark(bnum, burl, bdes)
+            rl[r_num].bl.append(b_ob)
         
         def viewb(self, b_ob):
             print(" Bookmark number: ", b_ob.bnum)
@@ -37,9 +35,6 @@ class Root:
 # Root list 
 rl = [] 
 r_obj = Root(0, '')
-
-# Bookmark object
-b_obj = r_obj.Bookmark(0, '', '')
 
 def main_menu():
     print("\n\n\t ---------------")
@@ -77,7 +72,8 @@ def main_menu():
         
         elif(ch1 == 2):
         
-            root_num = rl.__len__() + 1
+            ri = rl.__len__()
+            root_num =  ri + 1
             print("\n\n")
             root_name = str(input("Enter the root name: "))
         
@@ -85,13 +81,13 @@ def main_menu():
             
             print("\n New root created!")
             
-            b_num = r_obj.bl.__len__() + 1
+            b_num = rl[ri].bl.__len__() + 1
             
             url = str(input("\n\n Enter the bookmark url: "))
             
             des = str(input("\n Enter the bookmark description: "))
             
-            b_obj.newb(b_num, url, des)
+            newb(b_num, ri, url, des)
             
             print("\n Bookmark added!")
             
@@ -112,8 +108,8 @@ def main_menu():
             for i in range(rl.__len__()):     
                 r_obj.viewr(rl[i])
                 
-                for i in range(r_obj.bl.__len__()):
-                    b_obj.viewb(r_obj.bl[i])
+                for i in range(rl[i].bl.__len__()):
+                    b_obj.viewb(rl[i].bl[i])
             
         ch2 = str(input("Search root (Enter 'exit' to exit): "))
         print("\n\n")
